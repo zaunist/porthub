@@ -1,0 +1,21 @@
+name: Docker image build
+
+on:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        name: Build and publish image
+        steps:
+            - name: Checkout master
+              uses: actions/checkout@master
+            - name: Build and publish image
+              uses: ilteoood/docker_buildx@master
+              with:
+                publish: true
+                imageName: porthub
+                dockerUser: ${{ secrets.DOCKERHUB_USERNAME }}
+                dockerPassword: ${{ secrets.DOCKERHUB_TOKEN }}
