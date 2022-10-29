@@ -12,9 +12,17 @@ jobs:
         steps:
             - name: Checkout master
               uses: actions/checkout@master
+
+            - name: Login to DockerHub
+              uses: docker/login-action@v1
+              with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}
+                password: ${{ secrets.DOCKERHUB_TOKEN }}
+
             - name: Build and publish image
               uses: ilteoood/docker_buildx@master
               with:
+                context: .
                 publish: true
                 imageName: porthub
                 dockerUser: ${{ secrets.DOCKERHUB_USERNAME }}
