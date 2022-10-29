@@ -12,7 +12,6 @@ RUN go mod download
 # Copy the go source and configuration files
 COPY main.go main.go
 COPY cmd/ cmd/
-COPY config/ config/
 COPY pkg/ pkg/
 
 # Build
