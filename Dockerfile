@@ -16,15 +16,15 @@ COPY config/ config/
 COPY pkg/ pkg/
 
 # Build
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o porthub main.go
+RUN CGO_ENABLED=0 go build -a -o porthub main.go
 
 # Use alpine as base images
 FROM alpine:3.16
 WORKDIR /
 COPY --from=builder /workspace/porthub .
 
-EXPOSE 38210/tcp
-EXPOSE 38211/tcp
-EXPOSE 38212/tcp
+EXPOSE 38210
+EXPOSE 38211
+EXPOSE 38212
 
 ENTRYPOINT ["/porthub"]

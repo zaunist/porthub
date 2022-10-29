@@ -1,7 +1,7 @@
-package ports
+package timeout
 
 import (
-	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/zaunist/porthub/pkg/handler"
@@ -14,10 +14,12 @@ func NewHandler() (handler.RouteRegister, error) {
 }
 
 func (h *Handler) ApplyRoute(r *gin.Engine) {
-	r.GET("/server_port", h.Get)
+	r.GET("/timeout", h.Get)
 }
 
 func (h *Handler) Get(c *gin.Context) {
-	port := strings.Split(c.Request.Host, ":")
-	c.JSON(200, port[len(port)-1])
+	// wait for 15 second to test gateway reseponse
+	time.Sleep(time.Second * 15)
+
+	c.JSON(200, "timeout")
 }

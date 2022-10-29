@@ -1,13 +1,32 @@
 package porthub
 
 import (
-	"fmt"
+	"sync"
 
 	"github.com/zaunist/porthub/pkg/api"
 )
 
 func Main() {
-	fmt.Println("hello world")
 	r := api.SetUpRouter()
-	r.Run(":3000")
+	wg := sync.WaitGroup{}
+	wg.Add(3)
+	go func() {
+		defer func() {
+			wg.Done()
+		}()
+		r.Run(":38210")
+	}()
+	go func() {
+		defer func() {
+			wg.Done()
+		}()
+		r.Run(":38211")
+	}()
+	go func() {
+		defer func() {
+			wg.Done()
+		}()
+		r.Run(":38212")
+	}()
+	wg.Wait()
 }
